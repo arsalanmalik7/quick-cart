@@ -22,7 +22,15 @@ export default function Header() {
                     />
                 </div>
             </div>
-            <nav className="hidden md:flex items-center gap-4 text-sm font-medium">
+
+            <nav className="flex md:hidden items-center gap-4 text-sm font-medium">
+                <Link
+                    href="/"
+                    className="px-3 py-2 rounded-full transition-colors hover:bg-green-500/10 hover:text-green-500 data-[active=true]:bg-green-500/20 data-[active=true]:text-green-500"
+                    prefetch={false}
+                >
+                    Home
+                </Link>
                 <Link
                     href="#"
                     className="px-3 py-2 rounded-full transition-colors hover:bg-green-500/10 hover:text-green-500 data-[active=true]:bg-green-500/20 data-[active=true]:text-green-500"
@@ -37,13 +45,7 @@ export default function Header() {
                 >
                     Clothing
                 </Link>
-                <Link
-                    href="#"
-                    className="px-3 py-2 rounded-full transition-colors hover:bg-green-500/10 hover:text-green-500 data-[active=true]:bg-green-500/20 data-[active=true]:text-green-500"
-                    prefetch={false}
-                >
-                    Home
-                </Link>
+
                 <Link
                     href="#"
                     className="px-3 py-2 rounded-full transition-colors hover:bg-green-500/10 hover:text-green-500 data-[active=true]:bg-green-500/20 data-[active=true]:text-green-500"
@@ -57,6 +59,14 @@ export default function Header() {
                     prefetch={false}
                 >
                     Sports
+                </Link>
+                <Link
+                    href="/account/login"
+                    className="inline-flex items-center gap-2 px-3 py-2 rounded-full transition-colors hover:bg-green-500/10 hover:text-green-500"
+                    prefetch={false}
+                >
+                    <UserIcon className="w-5 h-5" />
+                    Login
                 </Link>
             </nav>
 
@@ -83,6 +93,13 @@ export default function Header() {
                         <nav className="flex-1 px-4 py-6 overflow-y-auto">
                             <div className="grid gap-4 text-sm font-medium">
                                 <Link
+                                    href="/"
+                                    className="px-3 py-2 rounded-full transition-colors hover:bg-green-500/10 hover:text-green-500 data-[active=true]:bg-green-500/20 data-[active=true]:text-green-500"
+                                    prefetch={false}
+                                >
+                                    Home
+                                </Link>
+                                <Link
                                     href="#"
                                     className="px-3 py-2 rounded-full transition-colors hover:bg-green-500/10 hover:text-green-500 data-[active=true]:bg-green-500/20 data-[active=true]:text-green-500"
                                     prefetch={false}
@@ -96,13 +113,7 @@ export default function Header() {
                                 >
                                     Clothing
                                 </Link>
-                                <Link
-                                    href="#"
-                                    className="px-3 py-2 rounded-full transition-colors hover:bg-green-500/10 hover:text-green-500 data-[active=true]:bg-green-500/20 data-[active=true]:text-green-500"
-                                    prefetch={false}
-                                >
-                                    Home
-                                </Link>
+
                                 <Link
                                     href="#"
                                     className="px-3 py-2 rounded-full transition-colors hover:bg-green-500/10 hover:text-green-500 data-[active=true]:bg-green-500/20 data-[active=true]:text-green-500"
@@ -135,15 +146,14 @@ export default function Header() {
             </div>
 
 
-
-            <div className="flex items-center gap-4">
-                <Button variant="ghost" size="icon" className="rounded-full  md:hidden " onClick={() => setIsOpen(true)}>
+            <div className="md:flex hidden items-center gap-4">
+                <Button variant="ghost" size="icon" className="rounded-full  " onClick={() => setIsOpen(true)}>
                     <MenuIcon className="w-6 h-6" />
                     <span className="sr-only">Open navigation</span>
                 </Button>
                 <Link
                     href="/account/login"
-                    className="hidden md:inline-flex items-center gap-2 px-3 py-2 rounded-full transition-colors hover:bg-green-500/10 hover:text-green-500"
+                    className="inline-flex items-center gap-2 px-3 py-2 rounded-full transition-colors hover:bg-green-500/10 hover:text-green-500"
                     prefetch={false}
                 >
                     <UserIcon className="w-5 h-5" />
@@ -174,7 +184,6 @@ function MountainIcon(props: any) {
     )
 }
 
-
 function SearchIcon(props: any) {
     return (
         <svg
@@ -196,6 +205,7 @@ function SearchIcon(props: any) {
 
 
 }
+
 function UserIcon(props: any) {
     return (
         <svg
@@ -215,6 +225,7 @@ function UserIcon(props: any) {
         </svg>
     )
 }
+
 function XIcon(props: any) {
     return (
         <svg

@@ -10,7 +10,7 @@ const Footer = () => {
             <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div className="flex items-center gap-2">
                     <MountainIcon className="w-6 h-6 text-green-500" />
-                    <span className="text-lg font-bold text-green-500">Mart</span>
+                    <span className="text-lg font-bold text-green-500">Quick Cart</span>
                 </div>
                 <div className="md:col-span-2 grid grid-cols-2 md:grid-cols-4 gap-8">
                     <div className="grid gap-2">
