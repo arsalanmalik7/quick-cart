@@ -8,7 +8,7 @@ export default function Header() {
     const [isOpen, setIsOpen] = useState(false);
     return (
         <header className="flex items-center justify-between h-16 px-4 md:px-6 bg-violet-100 shadow dark:bg-gray-950">
-            <Link href="#" className="flex items-center gap-2" prefetch={false}>
+            <Link href="/" className="flex items-center gap-2" prefetch={false}>
                 <MountainIcon className="w-6 h-6 text-green-500" />
                 <span className="text-lg font-bold text-green-500">Quick Cart</span>
             </Link>
@@ -71,7 +71,7 @@ export default function Header() {
                 >
                     <div className="flex flex-col h-full">
                         <div className="flex items-center justify-between h-16 px-4 border-b">
-                            <Link href="#" className="flex items-center gap-2" prefetch={false}>
+                            <Link href="/" className="flex items-center gap-2" prefetch={false}>
                                 <MountainIcon className="w-6 h-6 text-green-500" />
                                 <span className="text-lg font-bold text-green-500">Quick Cart</span>
                             </Link>
@@ -118,7 +118,7 @@ export default function Header() {
                                     Sports
                                 </Link>
                                 <Link
-                                    href="/login"
+                                    href="/account/login"
                                     className="px-3 py-2 rounded-full transition-colors hover:bg-green-500/10 hover:text-green-500 data-[active=true]:bg-green-500/20 data-[active=true]:text-green-500"
                                     prefetch={false}
                                 >
@@ -142,7 +142,7 @@ export default function Header() {
                     <span className="sr-only">Open navigation</span>
                 </Button>
                 <Link
-                    href="/login"
+                    href="/account/login"
                     className="hidden md:inline-flex items-center gap-2 px-3 py-2 rounded-full transition-colors hover:bg-green-500/10 hover:text-green-500"
                     prefetch={false}
                 >
