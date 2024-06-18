@@ -1,39 +1,79 @@
 import { PrismaClient } from "@prisma/client";
-import { NextApiRequest, NextApiResponse } from "next"
 import { NextResponse } from "next/server";
-import { NextRequest } from "next/server";
-// const prisma = new PrismaClient();
+// import bcrypt from "bcrypt"
 
-export async function POST(req: NextApiRequest, res: NextApiResponse) {
-    const { firstName, lastName, email, password } = req.body;
-    
-    console.log("req.body: ", req.body.firstName);
- 
-    console.log(firstName, lastName, email, password);
+const prisma = new PrismaClient();
 
-    const method = req.method;
+export async function POST(request: Request) {
+
+
+    const response = await request.json();
+    console.log("response: ", response);
+
+    const {
+        firstName,
+        lastName,
+        email,
+        password,
+    } = response;
+
+    const method = request.method;
 
     if (method === 'POST') {
         if (!firstName || !lastName || !email || !password) {
 
-            // return res.status(400).send({ message: 'Missing required fields' });
             return new NextResponse(
                 JSON.stringify({ message: 'Missing required fields' }),
                 { status: 400 }
             );
         }
 
-        // const user = await prisma.user.create({
-        //     data: {
-        //         name: `${firstName} ${lastName}`,
+        // const checkingUser = await prisma.user.findUnique({
+        //     where: {
         //         email: email,
         //     },
         // });
-        // console.log(user);
-        // res.json(user);
+        // if (checkingUser) {
+        //     return new NextResponse(
+        //         JSON.stringify({ message: 'User already exists' }),
+        //         { status: 400 }
+        //     );
+        // }
+
+        // const hashedPassword = await bcrypt.hash(password, 10);
+
+
+        try {
+
+            const user = await prisma.user.create({
+                data: {
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email,
+                    password: password,
+
+                },
+            });
+            console.log(user);
+
+        } catch (error) {
+            console.log(error);
+            return new NextResponse(
+                JSON.stringify({ message: 'Something went wrong' }),
+                { status: 500 }
+            );
+        }
+
+
+
+
+
+
     } else {
-
-        res.status(405).json({ message: 'Method not allowed' });
+        return new NextResponse(
+            JSON.stringify({ message: 'Method not allowed' }),
+            { status: 405 }
+        );
     }
-};
 
+}
