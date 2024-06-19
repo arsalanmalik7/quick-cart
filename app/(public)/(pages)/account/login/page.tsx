@@ -1,15 +1,26 @@
 'use client';
 import type { FormProps } from 'antd';
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, message, Alert, Divider } from 'antd';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const Login = () => {
     type FieldType = {
         email?: string;
         password?: string;
-        remember?: string;
-        firstName?: string;
-        lastName?: string;
+    };
+
+    const [messageApi, contextHolder] = message.useMessage();
+
+    const [isLoginErr, setIsLoginErr] = useState(false);
+    const [errMesasage, setErrMessage] = useState("");
+
+
+    const success = (message: any) => {
+        messageApi.open({
+            type: 'success',
+            content: message,
+        });
     };
 
 
@@ -18,163 +29,114 @@ const Login = () => {
         console.log('Login Success:', values);
         const { email, password } = values;
         console.log(email, password);
-    
-        // Implement login logic here
+
+        await loginSubmitHandler(email, password);
+
     };
-    
-    const onRegisterFinish: FormProps<FieldType>['onFinish'] = async (values) => {
-        console.log('Register Success:', values);
-        const { firstName, lastName, email, password } = values;
-        console.log(firstName, lastName, email, password);
-    
-        // Call registerSubmitHandler here
-        await registerSubmitHandler(firstName, lastName, email, password);
-    };
-    
 
     const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
 
-    const registerSubmitHandler = async (firstName?: string, lastName?: string, email?: string, password?: string) => {
-        console.log('Register Submit:', firstName, lastName, email, password);
-        
+    const loginSubmitHandler = async (email?: string, password?: string) => {
+        console.log('login Submit:', email, password);
+
         try {
-            const response = await axios.post('/api/auth/register', {
-                firstName,
-                lastName,
+            const response = await axios.post('/api/auth/login', {
                 email,
                 password
             });
-    
-            console.log("Register Response:", response.data);
+
+            console.log("login Response:", response.data);
+            const message = response.data.message;
+            success(message);
+            setIsLoginErr(false);
             // Handle success response
-            
-        } catch (error) {
-            console.error('Register Error:', error);
+
+        } catch (err: any) {
+            console.log('login err:', err.response.data);
+            const message = err.response.data.message;
+            setErrMessage(message);
+            setIsLoginErr(true);
             // Handle error
         }
     };
-    
+
 
     return (
         <>
-            <main className=" flex flex-wrap  justify-evenly  gap-10 bg-slate-100 min-h-screen p-6">
+            {contextHolder}
+            <main className=" flex flex-col items-center justify-center  gap-10 bg-slate-100 p-6">
 
                 {/* login form */}
-                <div className=' '>
-                    <h1 className="font-bold text-center text-4xl mb-6 p-2 border-b-4 rounded border-blue-400">Login</h1>
+                <h1 className="font-bold text-center text-4xl mb-6 p-2 border-b-4 rounded border-blue-400">Login</h1>
 
-                    <div className="flex flex-col items-center border-violet-100 p-10 rounded-lg border-2  justify-center">
-                        <Form
-                            name="login"
-                            labelCol={{ span: 8 }}
-                            wrapperCol={{ span: 16 }}
-                            initialValues={{ remember: true }}
-                            onFinish={onLoginFinish}
-                            onFinishFailed={onFinishFailed}
-                            autoComplete="on"
-                            className="w-full flex flex-col gap-8"
-                        >
-                            <p className=' text-left mb-5 font-semibold '>Sign in in to your account.</p>
+                <div className="flex flex-col items-center p-10 shadow-2xl rounded-lg border-2  justify-center">
 
-                            <Form.Item<FieldType>
-                                label="Email"
-                                name="email"
-                                className="m-2 p-3"
-                                rules={[{
-                                    required: true, message: 'Please enter your email!',
-                                    type: "email",
-                                }]}
-                            >
-                                <Input size='large' />
-                            </Form.Item>
-
-                            <Form.Item<FieldType>
-                                label="Password"
-                                name="password"
-                                rules={[{ required: true, message: 'Please enter your password!' }]}
-                            >
-                                <Input.Password size='large' />
-                            </Form.Item>
-
-                            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                                <Button type="primary" htmlType="submit" size="large">
-                                    Login
-                                </Button>
-                            </Form.Item>
-                        </Form>
+                    <div className=' flex mb-7 justify-center items-center  p-2 rounded-lg'>
+                        <MountainIcon className="w-9 h-9 text-green-500" />
+                        <span className="text-3xl font-bold text-green-500">Quick Cart</span>
                     </div>
+                    <Form
+                        name="login"
+                        labelCol={{ span: 8 }}
+                        wrapperCol={{ span: 16 }}
+                        initialValues={{ remember: true }}
+                        onFinish={onLoginFinish}
+                        onFinishFailed={onFinishFailed}
+                        autoComplete="on"
+                        className=" w-full flex flex-col  gap-8"
+                    >
+                        <p className=' text-center mb-5 italic font-semibold '>Sign in in to your account.</p>
+
+
+                        <Form.Item<FieldType>
+                            label="Email"
+                            name="email"
+                            className="m-2 p-3"
+                            rules={[{
+                                required: true, message: 'Please enter your email!',
+                                type: "email",
+                            }]}
+                        >
+                            <Input size='large' status={isLoginErr ? 'error' : ''} />
+                        </Form.Item>
+
+
+                        <Form.Item<FieldType>
+                            label="Password"
+                            name="password"
+                            rules={[{ required: true, message: 'Please enter your password!' }]}
+                        >
+                            <Input.Password status={isLoginErr ? 'error' : ''} size='large' />
+                        </Form.Item>
+
+                        {
+                            isLoginErr &&
+                            <Alert
+                                message="Error"
+                                description={errMesasage}
+                                type="error"
+                                showIcon
+                            />
+                        }
+
+                        <Form.Item className=' self-center ' >
+                            <Button type="primary" htmlType="submit" size="large">
+                                Login
+                            </Button>
+                        </Form.Item>
+
+
+                    </Form>
+                    <Divider plain style={{
+                        borderColor: 'black',
+                    }}>
+                        OR
+                    </Divider>
                 </div>
 
 
-                {/* register form */}
-                <div className=' border-none'>
-                    <h1 className="font-bold text-center text-4xl mb-6 p-2 border-b-4 rounded border-blue-400">Create Account</h1>
-
-                    <div className="flex flex-col items-center border-violet-100 p-10 rounded-lg border-2  justify-center">
-                        <Form
-                            name="signup"
-                            labelCol={{ span: 8 }}
-                            wrapperCol={{ span: 16 }}
-                            initialValues={{ remember: true }}
-                            onFinish={onRegisterFinish}
-                            onFinishFailed={onFinishFailed}
-                            autoComplete="on"
-                            className="w-full flex flex-col gap-8"
-                        >
-                            <p className=' text-left mb-5 font-semibold '>Create your account.</p>
-                            <Form.Item<FieldType>
-                                label="First Name"
-                                name="firstName"
-                                className="m-2 p-3"
-                                rules={[{
-                                    required: true, message: 'Please enter your first name!',
-                                }]}
-                            >
-                                <Input size='large' />
-                            </Form.Item>
-
-                            <Form.Item<FieldType>
-                                label="Last Name"
-                                name="lastName"
-                                className="m-2 p-3"
-                                rules={[{
-                                    required: true, message: 'Please enter your last name!',
-                                }]}
-                            >
-                                <Input size='large' />
-                            </Form.Item>
-
-                            <Form.Item<FieldType>
-                                label="Email"
-                                name="email"
-                                className="m-2 p-3"
-                                rules={[{
-                                    required: true, message: 'Please enter your email!',
-                                    type: "email",
-                                }]}
-                            >
-                                <Input size='large' />
-                            </Form.Item>
-
-                            <Form.Item<FieldType>
-                                label="Password"
-                                name="password"
-                                rules={[{ required: true, message: 'Please enter your password!' }]}
-                            >
-                                <Input.Password size='large' />
-                            </Form.Item>
-
-                            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                                <Button type="primary" htmlType="submit" size="large">
-                                    Register
-                                </Button>
-                            </Form.Item>
-                        </Form>
-
-                    </div>
-                </div>
             </main>
 
 
@@ -183,3 +145,22 @@ const Login = () => {
 };
 
 export default Login;
+
+function MountainIcon(props: any) {
+    return (
+        <svg
+            {...props}
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        >
+            <path d="m8 3 4 8 5-5 5 15H2L8 3z" />
+        </svg>
+    )
+}

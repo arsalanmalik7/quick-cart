@@ -1,21 +1,22 @@
 import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
-// import bcrypt from "bcrypt"
+import bcrypt from 'bcrypt'
+
 
 const prisma = new PrismaClient();
 
 export async function POST(request: Request) {
 
 
-    const response = await request.json();
-    console.log("response: ", response);
+    const body = await request.json();
+    console.log("body: ", body);
 
     const {
         firstName,
         lastName,
         email,
         password,
-    } = response;
+    } = body;
 
     const method = request.method;
 
@@ -28,19 +29,19 @@ export async function POST(request: Request) {
             );
         }
 
-        // const checkingUser = await prisma.user.findUnique({
-        //     where: {
-        //         email: email,
-        //     },
-        // });
-        // if (checkingUser) {
-        //     return new NextResponse(
-        //         JSON.stringify({ message: 'User already exists' }),
-        //         { status: 400 }
-        //     );
-        // }
+        const checkingUser = await prisma.user.findUnique({
+            where: {
+                email: email,
+            },
+        });
+        if (checkingUser) {
+            return new NextResponse(
+                JSON.stringify({ message: 'User already exists' }),
+                { status: 400 }
+            );
+        }
 
-        // const hashedPassword = await bcrypt.hash(password, 10);
+        const hashedPassword = await bcrypt.hash(password, 10);
 
 
         try {
@@ -50,11 +51,15 @@ export async function POST(request: Request) {
                     firstName: firstName,
                     lastName: lastName,
                     email: email,
-                    password: password,
+                    password: hashedPassword,
 
                 },
             });
-            console.log(user);
+            console.log("user: ",user);
+            return new NextResponse(
+                JSON.stringify({ message: 'User created successfully' }),
+                { status: 201 }
+            );
 
         } catch (error) {
             console.log(error);

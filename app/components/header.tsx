@@ -3,8 +3,29 @@ import Link from "next/link"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
+import { Popover } from "antd";
 
 export default function Header() {
+
+    const content = (
+        <div className=" flex flex-col gap-2">
+            <Link
+                href="/account/login"
+                className="inline-flex items-center gap-2 px-3 py-2 rounded-md transition-colors hover:bg-green-500/10 hover:text-green-500"
+                prefetch={false}
+            >
+                Login
+            </Link>
+            <Link
+                href="/account/signup"
+                className="inline-flex items-center gap-2 px-3 py-2 rounded-md transition-colors hover:bg-green-500/10 hover:text-green-500"
+                prefetch={false}
+            >
+                Signup
+            </Link>
+        </div>
+    );
+
     const [isOpen, setIsOpen] = useState(false);
     return (
         <header className="flex items-center justify-between h-16 px-4 md:px-6 bg-violet-100 shadow dark:bg-gray-950">
@@ -60,14 +81,13 @@ export default function Header() {
                 >
                     Sports
                 </Link>
-                <Link
-                    href="/account/login"
-                    className="inline-flex items-center gap-2 px-3 py-2 rounded-full transition-colors hover:bg-green-500/10 hover:text-green-500"
-                    prefetch={false}
-                >
+                <Popover content={content} className="m-2">
+                    <div className=" p-3">
                     <UserIcon className="w-5 h-5" />
-                    Login
-                </Link>
+                    </div>
+
+                </Popover>
+
             </nav>
 
             <div
