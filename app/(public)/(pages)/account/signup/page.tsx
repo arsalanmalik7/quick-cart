@@ -2,6 +2,7 @@
 import type { FormProps } from 'antd';
 import { Button, Form, Input, message } from 'antd';
 import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import axios from 'axios';
 
 const Signup = () => {
@@ -13,6 +14,9 @@ const Signup = () => {
     };
 
     const [messageApi, contextHolder] = message.useMessage();
+
+
+    const router = useRouter();
 
 
     const success = (message: any) => {
@@ -57,6 +61,9 @@ const Signup = () => {
             const message = response.data.message;
             success(message);
             // Handle success response
+            setTimeout(() => {
+                router.push('/account/login');
+            }, 2000)
 
         } catch (err: any) {
             console.log('Register err:', err.response.data);

@@ -83,7 +83,7 @@ export default function Header() {
                 </Link>
                 <Popover content={content} className="m-2">
                     <div className=" p-3">
-                    <UserIcon className="w-5 h-5" />
+                        <UserIcon className="w-5 h-5" />
                     </div>
 
                 </Popover>
@@ -171,14 +171,12 @@ export default function Header() {
                     <MenuIcon className="w-6 h-6" />
                     <span className="sr-only">Open navigation</span>
                 </Button>
-                <Link
-                    href="/account/login"
-                    className="inline-flex items-center gap-2 px-3 py-2 rounded-full transition-colors hover:bg-green-500/10 hover:text-green-500"
-                    prefetch={false}
-                >
-                    <UserIcon className="w-5 h-5" />
-                    Login
-                </Link>
+                <Popover content={content} className="m-2">
+                    <div className=" p-3">
+                        <UserIcon className="w-5 h-5" />
+                    </div>
+
+                </Popover>
 
             </div>
         </header>
