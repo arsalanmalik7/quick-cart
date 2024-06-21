@@ -81,6 +81,7 @@ export default function Header() {
                 >
                     Sports
                 </Link>
+
                 <Popover content={content} className="m-2">
                     <div className=" p-3">
                         <UserIcon className="w-5 h-5" />

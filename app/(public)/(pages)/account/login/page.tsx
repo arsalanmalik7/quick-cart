@@ -87,7 +87,7 @@ const Login = () => {
                         autoComplete="on"
                         className=" w-full flex flex-col  gap-8"
                     >
-                        <p className=' text-center mb-5 italic font-semibold '>Sign in in to your account.</p>
+                        <p className=' text-center mb-5 italic font-semibold  '>Sign in in to your account.</p>
 
 
                         <Form.Item<FieldType>

@@ -1,6 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt"
+import { redirect } from "next/navigation";
+
 
 const prisma = new PrismaClient();
 
@@ -9,6 +11,7 @@ export async function POST(request: Request) {
 
     const body = await request.json();
     console.log("body: ", body);
+
 
     const {
         email,
@@ -48,11 +51,13 @@ export async function POST(request: Request) {
                     { status: 400 }
                 );
             }
-
+            
             return new NextResponse(
                 JSON.stringify({ message: 'Login successful' }),
                 { status: 200 }
             );
+            
+        
 
 
         } catch (error) {
