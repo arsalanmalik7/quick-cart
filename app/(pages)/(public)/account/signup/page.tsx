@@ -149,11 +149,14 @@ const Signup = () => {
                             </Button>
                         </Form.Item>
                     </Form>
-                    <Divider plain style={{
+                    <div className=' font-extralight'>
+                        Already have an account? <a href="/account/login" className="text-blue-500">Login</a>
+                    </div>
+                    {/* <Divider plain style={{
                         borderColor: 'black',
                     }}>
                         OR
-                    </Divider>
+                    </Divider> */}
 
 
                 </div>

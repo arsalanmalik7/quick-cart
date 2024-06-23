@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "./globals.css";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
+import { Providers } from "./providers";
+
 
 const font = Roboto(
   { weight: ["400"], subsets: ["latin"] }
@@ -19,6 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <>
+      <Providers>
         <html lang="en">
           <body className={font.className}>
             <AntdRegistry>
@@ -26,6 +29,7 @@ export default function RootLayout({
             </AntdRegistry>
           </body>
         </html>
+      </Providers>
     </>
   );
 }

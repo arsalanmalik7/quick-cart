@@ -2,6 +2,8 @@ import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt"
 import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
+import jwt from 'jsonwebtoken';
 
 
 const prisma = new PrismaClient();
@@ -51,13 +53,41 @@ export async function POST(request: Request) {
                     { status: 400 }
                 );
             }
-            
+
+
+            const authToken = jwt.sign({
+                id: checkingUser.id,
+                email: checkingUser.email,
+                firstName: checkingUser.firstName,
+                lastName: checkingUser.lastName,
+                isAdmin: checkingUser.isAdmin,
+            }, process.env.JWT_SECRET!, {
+                expiresIn: '1d'
+            });
+            console.log("authToken: ", authToken);
+
+            cookies().set('authToken', authToken, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: 'strict',
+                path: '/',
+            });
+
             return new NextResponse(
-                JSON.stringify({ message: 'Login successful' }),
-                { status: 200 }
+                JSON.stringify({
+                    message: 'Login successful',
+                    user: {
+                        id: checkingUser.id,
+                        firstName: checkingUser.firstName,
+                        lastName: checkingUser.lastName,
+                        email: checkingUser.email,
+                    }
+                }),
+                { status: 200 },
+
             );
-            
-        
+
+
 
 
         } catch (error) {

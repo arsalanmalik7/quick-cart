@@ -53,6 +53,7 @@ export async function POST(request: Request) {
                     lastName: lastName,
                     email: email,
                     password: hashedPassword,
+                    isAdmin: false,
 
                 },
             });

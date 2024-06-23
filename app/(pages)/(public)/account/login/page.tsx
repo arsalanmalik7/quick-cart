@@ -2,13 +2,23 @@
 import type { FormProps } from 'antd';
 import { Button, Form, Input, message, Alert, Divider } from 'antd';
 import { useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector,  } from '@/app/hook';
+import { addUser, removeUser } from '@/app/(features)/users/usersSlice';
+import { useRouter } from 'next/navigation';
 import axios from 'axios';
 
 const Login = () => {
+
     type FieldType = {
         email?: string;
         password?: string;
     };
+
+    const router = useRouter();
+
+    const user = useAppSelector((state)=>state.users.users);
+    const dispatch = useAppDispatch();
+
 
     const [messageApi, contextHolder] = message.useMessage();
 
@@ -51,7 +61,8 @@ const Login = () => {
             const message = response.data.message;
             success(message);
             setIsLoginErr(false);
-            // Handle success response
+            dispatch(addUser(response.data.user));
+
 
         } catch (err: any) {
             console.log('login err:', err.response.data);
@@ -129,6 +140,11 @@ const Login = () => {
 
 
                     </Form>
+
+                    <div className=' font-extralight'>
+                        Don't have an account? <a href="/account/signup" className="text-blue-500">Sign up</a>
+                    </div>
+
                     <Divider plain style={{
                         borderColor: 'black',
                     }}>
