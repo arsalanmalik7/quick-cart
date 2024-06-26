@@ -1,0 +1,12 @@
+/* carousel.css */
+
+
+.ant-carousel .slick-prev,
+.ant-carousel .slick-next {
+  color: black !important;
+}
+
+.ant-carousel .slick-dots li button {
+  background-color: rgba(6, 114, 255, 0.671) !important; /* Change this to your desired color */
+}
+

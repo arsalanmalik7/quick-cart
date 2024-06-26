@@ -3,6 +3,7 @@ import { Roboto } from "next/font/google";
 import "./globals.css";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { Providers } from "./providers";
+import NextTopLoader from 'nextjs-toploader';
 
 
 const font = Roboto(
@@ -25,6 +26,7 @@ export default function RootLayout({
         <html lang="en">
           <body className={font.className}>
             <AntdRegistry>
+              <NextTopLoader showSpinner={false} color="blue" crawlSpeed={500}/>
               {children}
             </AntdRegistry>
           </body>

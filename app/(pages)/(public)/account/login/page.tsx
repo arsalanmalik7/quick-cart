@@ -2,8 +2,8 @@
 import type { FormProps } from 'antd';
 import { Button, Form, Input, message, Alert, Divider } from 'antd';
 import { useEffect, useState } from 'react';
-import { useAppDispatch, useAppSelector,  } from '@/app/hook';
-import { addUser, removeUser } from '@/app/(features)/users/usersSlice';
+import { useAppDispatch, useAppSelector, } from '@/app/hook';
+import { addUser, removeUser } from '@/app/(features)/user/userSlice';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 
@@ -16,7 +16,7 @@ const Login = () => {
 
     const router = useRouter();
 
-    const user = useAppSelector((state)=>state.users.users);
+    const user = useAppSelector((state: any) => state.user.user);
     const dispatch = useAppDispatch();
 
 
@@ -62,6 +62,13 @@ const Login = () => {
             success(message);
             setIsLoginErr(false);
             dispatch(addUser(response.data.user));
+
+            if (response.data.user.isAdmin === true) {
+                router.push('/admin');
+            } else {
+                router.push('/')
+
+            }
 
 
         } catch (err: any) {

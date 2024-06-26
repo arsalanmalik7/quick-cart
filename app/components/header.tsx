@@ -4,25 +4,47 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
 import { Popover } from "antd";
+import { useAppSelector } from "../hook";
+
 
 export default function Header() {
 
+
+    const user: any = useAppSelector((state: any) => state.user.user);
+    console.log("user: ", user);
+
+
+
     const content = (
         <div className=" flex flex-col gap-2">
-            <Link
-                href="/account/login"
-                className="inline-flex items-center gap-2 px-3 py-2 rounded-md transition-colors hover:bg-green-500/10 hover:text-green-500"
-                prefetch={false}
-            >
-                Login
-            </Link>
-            <Link
-                href="/account/signup"
-                className="inline-flex items-center gap-2 px-3 py-2 rounded-md transition-colors hover:bg-green-500/10 hover:text-green-500"
-                prefetch={false}
-            >
-                Signup
-            </Link>
+            {
+                user.length !== 0 ? <Link
+                    href="/account"
+                    className="inline-flex items-center gap-2 px-3 py-2 rounded-md transition-colors hover:bg-green-500/10 hover:text-green-500"
+                    prefetch={false}
+                >
+                    {user[0]?.firstName + " " + user[0]?.lastName}
+                </Link>
+
+                    :
+
+                    <>
+                        <Link
+                            href="/account/login"
+                            className="inline-flex items-center gap-2 px-3 py-2 rounded-md transition-colors hover:bg-green-500/10 hover:text-green-500"
+                            prefetch={false}
+                        >
+                            Login
+                        </Link>
+                        <Link
+                            href="/account/signup"
+                            className="inline-flex items-center gap-2 px-3 py-2 rounded-md transition-colors hover:bg-green-500/10 hover:text-green-500"
+                            prefetch={false}
+                        >
+                            Signup
+                        </Link>
+                    </>
+            }
         </div>
     );
 

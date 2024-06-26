@@ -6,28 +6,29 @@ interface User {
     firstName: string;
     lastName: string;
     email: string;
+    isAdmin: boolean;
 }
 
-interface UsersState {
-    users: User[];
+interface UserState {
+    user: User[];
 }
 
-const initialState: UsersState = {
-    users: [],
+const initialState: UserState = {
+    user: [],
 };
 
-const usersSlice = createSlice({
-    name: 'users',
+const userSlice: any = createSlice({
+    name: 'user',
     initialState,
     reducers: {
         addUser: (state, action: PayloadAction<User>) => {
-            state.users.push(action.payload);
+            state.user.push(action.payload);
         },
         removeUser: (state, action: PayloadAction<number>) => {
-            state.users = state.users.filter(user => user.id !== action.payload);
+            state.user = state.user.filter(data => data.id !== action.payload);
         },
     },
 });
 
-export const { addUser, removeUser } = usersSlice.actions;
-export default usersSlice.reducer;
+export const { addUser, removeUser } = userSlice.actions;
+export default userSlice.reducer;
