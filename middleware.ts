@@ -32,10 +32,10 @@ export function middleware(request: NextRequest) {
   // console.log(verifyToken);
 
 
-  // if (!verifyToken) {
-  //   url.pathname = '/account/login';
-  //   return NextResponse.redirect(url);
-  // }
+  if (!decodedToken) {
+    url.pathname = '/account/login';
+    return NextResponse.redirect(url);
+  }
 
   // const checkingisAdmin = token?.value.isAdmin;
   // console.log(checkingisAdmin);
