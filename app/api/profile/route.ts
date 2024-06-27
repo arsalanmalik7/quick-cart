@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
@@ -6,17 +7,26 @@ import jwt from 'jsonwebtoken';
 
 const prisma = new PrismaClient();
 
-export async function GET(request : Request) {
+export async function GET(request: NextRequest) {
 
     const method = request.method;
+    const url = request.nextUrl.clone();
 
-    // const token = request.cookies.get('authToken')?.value;
     const authToken: any = cookies().get('authToken')?.value;
-    console.log("getting token on profile: ",authToken);
+    console.log("getting token on profile: ", authToken);
     const decodedToken: any = jwt.decode(authToken);
     console.log("decoded token: ", decodedToken);
     const userId = decodedToken?.id;
 
+
+    if (!authToken) {
+        return NextResponse.json({ meassage: "session expired please login again" }, { status: 401 });
+
+    };
+
+    if (!userId) {
+        return NextResponse.json({ message: 'User not found' });
+    };
 
     if (method === 'GET') {
         try {

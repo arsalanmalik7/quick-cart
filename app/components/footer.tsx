@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 
 const Footer = () => {
     return (
-        <footer className="bg-gray-950 shadow dark:bg-gray-950 py-8 px-4 md:px-6">
+        <footer className="bg-gray-950 shadow dark:bg-gray-950 py-8 px-4 md:px-6 ">
             <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div className="flex items-center gap-2">
                     <MountainIcon className="w-6 h-6 text-green-500" />

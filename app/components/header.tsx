@@ -11,7 +11,6 @@ export default function Header() {
 
 
     const user: any = useAppSelector((state: any) => state.user.user);
-    console.log("user: ", user);
 
 
 

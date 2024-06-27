@@ -5,7 +5,6 @@ import axios from "axios";
 import { addUser } from '@/app/(features)/user/userSlice';
 
 const GetProfile = () => {
-    console.log("Get Profile Component");
 
     const user = useAppSelector((state: any) => state.user.user);
     const dispatch = useAppDispatch();
@@ -13,10 +12,9 @@ const GetProfile = () => {
 
     useEffect(() => {
         const getProfileFunction = async () => {
-            console.log("user from profile: ", user);
 
            
-            if (hasFetchedProfile) {
+            if (!user || hasFetchedProfile) {
                 return;
             }
 
@@ -40,6 +38,7 @@ const GetProfile = () => {
         if (user) {
             getProfileFunction();
         }
+        
     }, []);
 
     return null; // Return null since this component does not render anything to the DOM

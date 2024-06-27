@@ -62,7 +62,7 @@ export async function POST(request: Request) {
                 lastName: checkingUser.lastName,
                 isAdmin: checkingUser.isAdmin,
             }, process.env.JWT_SECRET!, {
-                expiresIn: '1d'
+                expiresIn: '30d'
             });
             console.log("authToken: ", authToken);
 
