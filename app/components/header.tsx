@@ -170,16 +170,28 @@ export default function Header() {
                                 >
                                     Sports
                                 </Link>
-                                <Link
-                                    href="/account/login"
-                                    className="px-3 py-2 rounded-full transition-colors hover:bg-green-500/10 hover:text-green-500 data-[active=true]:bg-green-500/20 data-[active=true]:text-green-500"
-                                    prefetch={false}
-                                >
-                                    <span className=" flex gap-2">
-                                        <UserIcon className="w-5 h-5" />
-                                        Login
-                                    </span>
-                                </Link>
+                                {
+                                    user.length !== 0 ?
+                                        <Link
+                                            href="/account"
+                                            className="px-2 py-2 flex gap-1 rounded-full transition-colors hover:bg-green-500/10 hover:text-green-500 data-[active=true]:bg-green-500/20 data-[active=true]:text-green-500"
+                                            prefetch={false}
+                                        >
+                                            <UserIcon className="w-5 h-5" />
+                                            {user[0]?.firstName + " " + user[0]?.lastName}
+                                        </Link>
+                                        :
+                                        <Link
+                                            href="/account/login"
+                                            className="px-3 py-2 rounded-full transition-colors hover:bg-green-500/10 hover:text-green-500 data-[active=true]:bg-green-500/20 data-[active=true]:text-green-500"
+                                            prefetch={false}
+                                        >
+                                            <span className=" flex gap-2">
+                                                <UserIcon className="w-5 h-5" />
+                                                Login
+                                            </span>
+                                        </Link>
+                                }
                             </div>
 
                         </nav>
@@ -193,12 +205,12 @@ export default function Header() {
                     <MenuIcon className="w-6 h-6" />
                     <span className="sr-only">Open navigation</span>
                 </Button>
-                <Popover content={content} className="m-2">
+                {/* <Popover content={content} className="m-2">
                     <div className=" p-3">
                         <UserIcon className="w-5 h-5" />
                     </div>
 
-                </Popover>
+                </Popover> */}
 
             </div>
         </header>
