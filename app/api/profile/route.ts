@@ -19,10 +19,18 @@ export async function GET(request: NextRequest) {
     const userId = decodedToken?.id;
 
 
+    // if (!authToken) {
+    //     const url = request.nextUrl.clone();
+    //     url.pathname = '/';
+    //     return NextResponse.redirect(url);
+    // }
+
     if (!authToken) {
         return NextResponse.json({ meassage: "session expired please login again" }, { status: 401 });
 
     };
+
+
 
     if (!userId) {
         return NextResponse.json({ message: 'User not found' });

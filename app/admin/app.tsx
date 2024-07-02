@@ -1,8 +1,8 @@
 "use client"
 
-import { Admin, Resource, ListGuesser } from 'react-admin';
+import { Admin, Resource, useDelete } from 'react-admin';
 import simpleRestProvider from "ra-data-simple-rest";
-import { list } from 'postcss';
+import UserList from "./users/list";
 
 const apiProvider: any = simpleRestProvider("/api");
 
@@ -10,9 +10,10 @@ const App = () => {
     return (
         <>
             <Admin dataProvider={apiProvider}>
-                <Resource 
-                name='users'
-                list={ListGuesser}
+                <Resource
+                    name='users'
+                    list={UserList}
+
                 />
             </Admin>
         </>

@@ -1,11 +1,13 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from "@/app/hook";
+import { useRouter } from 'next/navigation';
 import axios from "axios";
 import { addUser } from '@/app/(features)/user/userSlice';
 
 const GetProfile = () => {
 
+    const router = useRouter();
     const user = useAppSelector((state: any) => state.user.user);
     const dispatch = useAppDispatch();
     const [hasFetchedProfile, setHasFetchedProfile] = useState(false);
@@ -31,6 +33,8 @@ const GetProfile = () => {
                 setHasFetchedProfile(true);
             } catch (error) {
                 console.error(error);
+                router.push("/account/login");
+                
             }
         };
 
