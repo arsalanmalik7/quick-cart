@@ -16,15 +16,15 @@ const Home: React.FC = () => {
 
     return (
         <>
-            <Carousel autoplay speed={700} arrows={true} adaptiveHeight={true} draggable className="w-full p-2">
+            <Carousel autoplay speed={700} arrows={true}  draggable className="w-full p-2">
                 <div>
-                    <Image style={contentStyle} src={mobile} alt="mobile" className=" object-contain w-full h-full" />
+                    <Image style={contentStyle} src={mobile} alt="mobile" className=" object- w-full h-full" />
                 </div>
                 <div>
-                    <Image style={contentStyle} src={mobile2} alt="mobile" className=" object-contain w-full h-full" />
+                    <Image style={contentStyle} src={mobile2} alt="mobile" className=" object- w-full h-full" />
                 </div>
                 <div>
-                    <Image style={contentStyle} src={mobile3} alt="mobile" className=" object-contain w-full h-full" />
+                    <Image style={contentStyle} src={mobile3} alt="mobile" className=" object- w-full h-full" />
                 </div>
             </Carousel>
         </>

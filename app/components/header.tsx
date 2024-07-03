@@ -2,17 +2,41 @@
 import Link from "next/link"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { useState } from "react"
-import { Popover } from "antd";
+import React, { useState } from "react"
+import { Popover, Menu } from "antd";
+import type { MenuProps } from "antd";
 import { useAppSelector } from "../hook";
 
 
-export default function Header() {
+const Header: React.FC = () => {
 
+
+    type MenuItems = Required<MenuProps>['items']
+
+    const items: MenuItems = [
+        {
+            label: 'Navigation Three - Submenu',
+            key: 'SubMenu',
+            children: [
+                {
+                    key: 'two',
+                    label: <Link href="#"
+                     >
+                        Item 1
+                     </Link>,
+                },
+            ]
+        }
+    ]
 
     const user: any = useAppSelector((state: any) => state.user.user);
 
+    const [current, setCurrent] = useState('mail');
 
+    const onClick: MenuProps['onClick'] = (e) => {
+      console.log('click ', e);
+      setCurrent(e.key);
+    };
 
     const content = (
         <div className=" flex flex-col gap-2">
@@ -49,66 +73,84 @@ export default function Header() {
 
     const [isOpen, setIsOpen] = useState(false);
     return (
-        <header className="flex items-center justify-between h-16 px-4 md:px-6 bg-violet-100 shadow dark:bg-gray-950">
-            <Link href="/" className="flex items-center gap-2" prefetch={false}>
-                <MountainIcon className="w-6 h-6 text-green-500" />
-                <span className="text-lg font-bold text-green-500">Quick Cart</span>
-            </Link>
-            <div className="flex-1 max-w-md mx-4">
-                <div className="relative">
-                    <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500 dark:text-gray-400" />
-                    <Input
-                        type="search"
-                        placeholder="Search products..."
-                        className="pl-10 w-full rounded-full bg-slate-50 dark:bg-gray-800 focus:bg-white focus:ring-2 focus:ring-green-500 focus:outline-none"
-                    />
+        <header className="flex flex-col items-center md:px-6  shadow dark:bg-gray-950 ">
+
+            <div className=" flex p-4 justify-around  w-full items-center">
+                <Link href="/" className="flex items-center gap-1" prefetch={false}>
+                    <MountainIcon className="w-8 h-8 md:w-6 md:h-6 text-green-500" />
+                    <span className="text-2xl md:text-lg font-bold text-green-500">Quick Cart</span>
+                </Link>
+                <div className=" flex gap-2 items-center">
+                    <div className="flex-1 max-w-md mx-4">
+                        <div className="relative">
+                            <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500 dark:text-gray-400" />
+                            <Input
+                                type="search"
+                                placeholder="Search products..."
+                                className="pl-10 w-full rounded-full bg-slate-50 dark:bg-gray-800 focus:bg-white focus:ring-2 focus:ring-green-500 focus:outline-none"
+                            />
+                        </div>
+                    </div>
+                    <div className="md:flex hidden items-center gap-4">
+                        <Button variant="ghost" size="icon" className="rounded-full  " onClick={() => setIsOpen(true)}>
+                            <MenuIcon className="w-6 h-6" />
+                            <span className="sr-only">Open navigation</span>
+                        </Button>
+
+                    </div>
+
+                    <Popover content={content} className="m-2 md:hidden">
+                        <div className=" p-3 text-blue-500  ">
+                            <UserIcon className="w-6 h-6" />
+                        </div>
+
+                    </Popover>
                 </div>
             </div>
 
-            <nav className="flex md:hidden items-center gap-4 text-sm font-medium">
+            <nav className="flex md:hidden items-center justify-evenly gap-4 text-sm font-medium p-2  w-full" >
                 <Link
                     href="/"
-                    className="px-3 py-2 rounded-full transition-colors hover:bg-green-500/10 hover:text-green-500 data-[active=true]:bg-green-500/20 data-[active=true]:text-green-500"
+                    className="px-3 py-2 rounded-full text-blue-600 flex-grow self-center text-center  transition-colors hover:bg-green-500/10 hover:text-green-500 data-[active=true]:bg-green-500/20 data-[active=true]:text-green-500"
                     prefetch={false}
                 >
                     Home
                 </Link>
+
                 <Link
+
                     href="#"
-                    className="px-3 py-2 rounded-full transition-colors hover:bg-green-500/10 hover:text-green-500 data-[active=true]:bg-green-500/20 data-[active=true]:text-green-500"
+                    className="px-3 py-2 rounded-full text-blue-600 flex-grow self-center text-center  transition-colors hover:bg-green-500/10 hover:text-green-500 data-[active=true]:bg-green-500/20 data-[active=true]:text-green-500"
                     prefetch={false}
                 >
-                    Electronics
+                    New Arrivals
                 </Link>
+               
+                <Menu mode="horizontal" items={items} selectedKeys={[current]} onClick={onClick}  />
                 <Link
                     href="#"
-                    className="px-3 py-2 rounded-full transition-colors hover:bg-green-500/10 hover:text-green-500 data-[active=true]:bg-green-500/20 data-[active=true]:text-green-500"
+                    className="px-3 py-2 rounded-full text-blue-600 flex-grow self-center text-center  transition-colors hover:bg-green-500/10 hover:text-green-500 data-[active=true]:bg-green-500/20 data-[active=true]:text-green-500"
                     prefetch={false}
                 >
-                    Clothing
+                    About
                 </Link>
 
                 <Link
                     href="#"
-                    className="px-3 py-2 rounded-full transition-colors hover:bg-green-500/10 hover:text-green-500 data-[active=true]:bg-green-500/20 data-[active=true]:text-green-500"
+                    className="px-3 py-2 rounded-full text-blue-600 flex-grow self-center text-center  transition-colors hover:bg-green-500/10 hover:text-green-500 data-[active=true]:bg-green-500/20 data-[active=true]:text-green-500"
                     prefetch={false}
                 >
                     Beauty
                 </Link>
                 <Link
                     href="#"
-                    className="px-3 py-2 rounded-full transition-colors hover:bg-green-500/10 hover:text-green-500 data-[active=true]:bg-green-500/20 data-[active=true]:text-green-500"
+                    className="px-3 py-2 rounded-full text-blue-600 flex-grow self-center text-center  transition-colors hover:bg-green-500/10 hover:text-green-500 data-[active=true]:bg-green-500/20 data-[active=true]:text-green-500"
                     prefetch={false}
                 >
                     Sports
                 </Link>
 
-                <Popover content={content} className="m-2">
-                    <div className=" p-3">
-                        <UserIcon className="w-5 h-5" />
-                    </div>
 
-                </Popover>
 
             </nav>
 
@@ -200,22 +242,12 @@ export default function Header() {
             </div>
 
 
-            <div className="md:flex hidden items-center gap-4">
-                <Button variant="ghost" size="icon" className="rounded-full  " onClick={() => setIsOpen(true)}>
-                    <MenuIcon className="w-6 h-6" />
-                    <span className="sr-only">Open navigation</span>
-                </Button>
-                {/* <Popover content={content} className="m-2">
-                    <div className=" p-3">
-                        <UserIcon className="w-5 h-5" />
-                    </div>
 
-                </Popover> */}
-
-            </div>
         </header>
     )
-}
+};
+
+export default Header;
 
 function MountainIcon(props: any) {
     return (
