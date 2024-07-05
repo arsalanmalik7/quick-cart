@@ -149,7 +149,7 @@ const Login = () => {
                     </Form>
 
                     <div className=' font-extralight'>
-                        Don't have an account? <a href="/account/signup" className="text-blue-500">Sign up</a>
+                        Don&apos;t have an account? <a href="/account/signup" className="text-blue-500">Sign up</a>
                     </div>
 
                     <Divider plain style={{
