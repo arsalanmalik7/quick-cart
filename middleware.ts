@@ -24,10 +24,10 @@ export function middleware(request: NextRequest) {
   const decodedToken: any = jwt.decode(token?.value);
   
   console.log(decodedToken);
-  if (decodedToken?.isAdmin !== true) {
-    url.pathname = '/';
-    return NextResponse.redirect(url);
-  }
+  // if (decodedToken?.isAdmin !== true) {
+  //   url.pathname = '/';
+  //   return NextResponse.redirect(url);
+  // }
   // const verifyToken = jwt.verify(token?.value, process.env.JWT_SECRET!);
   // console.log(verifyToken);
 
@@ -49,5 +49,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin/:path*', '/api/users'],
+  matcher: ['/admin/:path*', '/api/users', '/account'],
 };

@@ -10,7 +10,7 @@ export  async function DELETE(request: NextRequest) {
 
     const  segment  = url.pathname;
 
-    const id = segment.slice(11);
+    const id = segment.slice(14);
     console.log("id: ", id);
 
     if (request.method === 'DELETE') {
@@ -19,22 +19,22 @@ export  async function DELETE(request: NextRequest) {
 
         try {
             // Convert `id` to a number if necessary
-            const userId = Number(id);
+            const productId = Number(id);
 
             // Perform deletion using Prisma
-            const deletedUser = await prisma.users.delete({
+            const deletedProduct = await prisma.products.delete({
                 where: {
-                    id: userId,
+                    id: productId,
                 },
             });
 
             // Respond with deleted user data
-            return NextResponse.json(deletedUser, { status: 200 });
+            return NextResponse.json(deletedProduct, { status: 200 });
         } catch (error) {
-            console.error('Error deleting user:', error);
-            return NextResponse.json({ error: 'Failed to delete user' }, { status: 500 });
-        }
-    }
+            console.error('Error deleting product:', error);
+            return NextResponse.json({ error: 'Failed to delete product' }, { status: 500 });
+        };
+    };
 
     return NextResponse.json({ error: 'Method not allowed' }, { status: 405 });
 }

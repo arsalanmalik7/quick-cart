@@ -2,21 +2,47 @@
 import Link from "next/link"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { ChevronDown } from "lucide-react";
 import { Popover } from "antd";
 import { useAppSelector } from "../hook";
-import { useSafeSetState } from "react-admin";
-
+import '../globals.css';
+import axios from "axios";
 
 const Header: React.FC = () => {
 
 
 
     const [showProducts, setShowProducts]: any = useState(false);
+    const [animate, setAnimate] = useState(false);
+    const [products, setProducts] = useState([]);
+
+    useEffect(() => {
+        if (showProducts) {
+            setAnimate(true);
+        } else {
+            const timer = setTimeout(() => setAnimate(false), 300);
+            return () => clearTimeout(timer);
+        }
+    }, [showProducts]);
 
     const user: any = useAppSelector((state: any) => state.user.user);
 
+
+
+    useEffect(() => {
+        const fetchProductData = async () => {
+            try {
+                const fetcheProducts = await axios.get('/api/products');
+                console.log(fetcheProducts.data);
+                setProducts(fetcheProducts.data);
+                console.log(products);
+            } catch (error) {
+                console.log(error);
+            };
+        };
+        fetchProductData();
+    }, [])
 
     const content = (
         <div className=" flex flex-col gap-2">
@@ -107,47 +133,41 @@ const Header: React.FC = () => {
                         New Arrivals
                     </Link>
                     <div
-                        onClick={() => {
-                            setShowProducts(!showProducts)
-                        }}
                         onMouseEnter={() => {
                             setShowProducts(true)
                         }}
+                        onClick={() => {
+                            setShowProducts(!showProducts)
+                        }}
+
                         className="flex items-center gap-4 justify-center hover:cursor-pointer px-3 py-3 ease-linear hover:rounded-full bg-green-500 rounded text-white  flex-grow self-center text-center  transition-colors hover:bg-green-500/10 hover:font-bold hover:text-green-500 data-[active=true]:bg-green-500/20 data-[active=true]:text-green-500"
                     >
                         Products <ChevronDown />
                     </div>
                     {
-                        showProducts ? (
+                        animate ? (
+
                             <div
                                 onMouseLeave={() => setShowProducts(false)}
-                                className="absolute z-10 top-40  left-0 w-full justify-center items-center bg-white  shadow-lg rounded-md p-4 flex flex-col gap-2"
+                                className={`absolute z-10 top-40 left-0 w-full justify-center items-center bg-white shadow-lg rounded-md p-4 flex flex-col gap-2 ${showProducts ? "slide-down" : "slide-up"
+                                    }`}
                             >
 
-                                <div className=" flex gap-2 flex-wrap w-3/4">
-                                    <Link
-                                        href="#"
-                                        className="px-3 py-3 ease-linear hover:rounded-full bg-green-500 rounded text-white  flex-grow self-center text-center  transition-colors hover:bg-green-500/10 hover:font-bold hover:text-green-500 data-[active=true]:bg-green-500/20 data-[active=true]:text-green-500"
-                                        prefetch={false}
-                                    >
-                                        Men
-                                    </Link>
-                                    <Link
-                                        href="#"
-                                        className="px-3 py-3 ease-linear hover:rounded-full bg-green-500 rounded text-white  flex-grow self-center text-center  transition-colors hover:bg-green-500/10 hover:font-bold hover:text-green-500 data-[active=true]:bg-green-500/20 data-[active=true]:text-green-500"
-                                        prefetch={false}
-                                    >
-                                        Women
-                                    </Link>
-                                    <Link
-                                        href="#"
-                                        className="px-3 py-3 ease-linear hover:rounded-full bg-green-500 rounded text-white  flex-grow self-center text-center  transition-colors hover:bg-green-500/10 hover:font-bold hover:text-green-500 data-[active=true]:bg-green-500/20 data-[active=true]:text-green-500"
-                                        prefetch={false}
-                                    >
-                                        Kids
-                                    </Link>
+                                <div className="flex gap-2 flex-wrap w-3/4">
+                                    {products?.map((product: any) => (
+                                        <Link
+                                            key={product.id}
+                                            href={`/products/${product.productName.toLowerCase().replace(/ /g, '-')}`}
+                                            className="px-3 py-3 ease-linear hover:rounded-full bg-green-500 rounded text-white flex-grow self-center text-center transition-colors hover:bg-green-500/10 hover:font-bold hover:text-green-500 data-[active=true]:bg-green-500/20 data-[active=true]:text-green-500"
+                                        >
+
+                                            {product.productName}
+
+                                        </Link>
+                                    ))}
                                 </div>
                             </div>
+
                         )
                             :
                             null

@@ -39,7 +39,7 @@ export async function GET(request: NextRequest) {
     if (method === 'GET') {
         try {
 
-            const user = await prisma.user.findUnique({
+            const user = await prisma.users.findUnique({
                 where: {
                     id: userId,
                 },

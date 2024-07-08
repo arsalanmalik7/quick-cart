@@ -33,7 +33,7 @@ const GetProfile = () => {
                 setHasFetchedProfile(true);
             } catch (error) {
                 console.error(error);
-                router.push("/account/login");
+                // router.push("/account/login");
                 
             }
         };

@@ -29,7 +29,7 @@ export async function POST(request: Request) {
             );
         }
 
-        const checkingUser = await prisma.user.findUnique({
+        const checkingUser = await prisma.users.findUnique({
             where: {
                 email: email,
             },
@@ -46,7 +46,7 @@ export async function POST(request: Request) {
 
         try {
 
-            const user = await prisma.user.create({
+            const user = await prisma.users.create({
                 data: {
                     firstName: firstName,
                     lastName: lastName,

@@ -10,7 +10,7 @@ export async function GET() {
 
 
 
-    const users = await prisma.user.findMany();
+    const users = await prisma.users.findMany();
     return NextResponse.json(users);
 }
 
@@ -21,7 +21,7 @@ export async function DELETE(request: NextRequest) {
     const id: any = searchParams.get('id');
 
     console.log("delete userId: ",searchParams);
-    // const deletedUser = await prisma.user.delete({
+    // const deletedUser = await prisma.users.delete({
     //     where: {
     //         id: id
     //     }
